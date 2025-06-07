@@ -1,14 +1,19 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import router from "@/router";
-import axios from "axios";
+import api from "@/plugins/axios";
 
 export const useUserStore = defineStore("user", () => {
 	const user = ref(null);
 
-	const setUser = (payload) => {
-		user.value = payload;
+	const fetchUser = async () => {
+		try {
+			const response = await api.get("/api/user");
+
+			console.log(response);
+
+			user.value = response.data;
+		} catch (error) {}
 	};
 
-	return { user, setUser };
+	return { user, fetchUser };
 });

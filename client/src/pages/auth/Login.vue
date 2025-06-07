@@ -9,8 +9,8 @@
 	import { ref } from "vue";
 
 	const data = ref<Login>({
-		email: "",
-		password: "",
+		email: "test@trello.com",
+		password: "password",
 	});
 
 	const authStore = useAuthStore();

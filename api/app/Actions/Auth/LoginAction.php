@@ -18,10 +18,9 @@ class LoginAction {
         
         $user->update(['last_login_at' => now()]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;  
 
         return [
-            'user' => $user,
             'token' => $token,
         ];
     }   

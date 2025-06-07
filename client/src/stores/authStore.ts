@@ -1,29 +1,36 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
-import axios from "axios";
 import type { Login, Register } from "@/types/auth";
+import api from "@/plugins/axios";
+import { useUserStore } from "./userStore";
 
 export const useAuthStore = defineStore("auth", () => {
 	const isAuthenticated = ref(false);
 
+	const userStore = useUserStore();
+
 	const login = async (credentials: Login) => {
-		await axios.get("/sanctum/csrf-cookie");
-
 		try {
-			const { data } = await axios.post("api/login", credentials);
+			const { data } = await api.post("api/login", credentials);
 
-			router.push({ name: "home" });
+			setAuthToken(data.token);
+
+			await userStore.fetchUser();
+
+			// router.push({ name: "home" });
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
 	const register = async (credentials: Register) => {
-		await axios.get("/sanctum/csrf-cookie");
-
 		try {
-			const { data } = await axios.post("api/register", credentials);
+			const { data } = await api.post("api/register", credentials);
+
+			setAuthToken(data.token);
+
+			await userStore.fetchUser();
 
 			router.push({ name: "home" });
 		} catch (error) {
@@ -32,9 +39,17 @@ export const useAuthStore = defineStore("auth", () => {
 	};
 
 	const logout = async () => {
-		await axios.post("api/logout");
+		await api.post("api/logout");
 
 		router.push({ name: "login" });
+	};
+
+	const setAuthToken = (token: string | null) => {
+		if (token) {
+			api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+		} else {
+			delete api.defaults.headers.common["Authorization"];
+		}
 	};
 
 	return { isAuthenticated, login, register, logout };
