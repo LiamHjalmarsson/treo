@@ -4,7 +4,8 @@
 	import BaseButton from "@/components/ui/actions/BaseButton.vue";
 	import BaseLink from "@/components/ui/actions/BaseLink.vue";
 	import BaseInput from "@/components/ui/form/BaseInput.vue";
-	import { useAuthStore, Register } from "@/stores/AuthStore";
+	import { useAuthStore } from "@/stores/AuthStore";
+	import type { Register } from "@/types/auth";
 	import { ref } from "vue";
 
 	const data = ref<Register>({

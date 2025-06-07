@@ -2,18 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
 import axios from "axios";
-
-export interface Login {
-	email: string;
-	password: string;
-}
-
-export interface Register {
-	username: string;
-	email: string;
-	password: string;
-	password_confirmation: string;
-}
+import type { Login, Register } from "@/types/auth";
 
 export const useAuthStore = defineStore("auth", () => {
 	const isAuthenticated = ref(false);
