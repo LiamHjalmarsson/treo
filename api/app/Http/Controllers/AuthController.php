@@ -7,6 +7,8 @@ use App\Actions\Auth\RegisterAction;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -23,5 +25,17 @@ class AuthController extends Controller
         $data = $action($request);
         
         return response()->json($data, 201);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $token = $request->bearerToken();
+        $accessToken = PersonalAccessToken::findToken($token);
+
+        if ($accessToken) {
+            $accessToken->delete();
+        }
+
+        return response()->json(["message" => "Logged out"], 200);
     }
 }

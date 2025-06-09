@@ -19,6 +19,8 @@ export const useAuthStore = defineStore("auth", () => {
 			await userStore.fetchUser();
 
 			isAuthenticated.value = true;
+
+			router.push({ name: "home" });
 		} catch (error) {
 			console.error(error);
 		}
@@ -28,6 +30,8 @@ export const useAuthStore = defineStore("auth", () => {
 		try {
 			await api.post("register", credentials);
 			isAuthenticated.value = true;
+
+			router.push({ name: "home" });
 		} catch (error) {
 			console.error(error);
 		}
@@ -36,7 +40,9 @@ export const useAuthStore = defineStore("auth", () => {
 	const logout = async () => {
 		try {
 			await api.post("logout");
+
 			isAuthenticated.value = false;
+
 			router.push({ name: "login" });
 		} catch (error) {
 			console.error(error);
