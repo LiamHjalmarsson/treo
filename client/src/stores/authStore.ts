@@ -11,14 +11,14 @@ export const useAuthStore = defineStore("auth", () => {
 	const userStore = useUserStore();
 
 	const login = async (credentials: Login) => {
-		try {
-			const { data } = await api.post("api/login", credentials);
+		await api.get("/sanctum/csrf-cookie");
 
-			setAuthToken(data.token);
+		try {
+			await api.post("/api/login", credentials);
 
 			await userStore.fetchUser();
 
-			// router.push({ name: "home" });
+			isAuthenticated.value = true;
 		} catch (error) {
 			console.error(error);
 		}
@@ -26,29 +26,20 @@ export const useAuthStore = defineStore("auth", () => {
 
 	const register = async (credentials: Register) => {
 		try {
-			const { data } = await api.post("api/register", credentials);
-
-			setAuthToken(data.token);
-
-			await userStore.fetchUser();
-
-			router.push({ name: "home" });
+			await api.post("register", credentials);
+			isAuthenticated.value = true;
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
 	const logout = async () => {
-		await api.post("api/logout");
-
-		router.push({ name: "login" });
-	};
-
-	const setAuthToken = (token: string | null) => {
-		if (token) {
-			api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-		} else {
-			delete api.defaults.headers.common["Authorization"];
+		try {
+			await api.post("logout");
+			isAuthenticated.value = false;
+			router.push({ name: "login" });
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
