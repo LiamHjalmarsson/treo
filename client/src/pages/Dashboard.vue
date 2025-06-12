@@ -1,14 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+	import TheSidebar from "@/components/layouts/TheSidebar.vue";
+</script>
 
 <template>
-	<div>
-		<nav>
-			<ul>
-				<li>
-					<RouterLink> Overview </RouterLink>
-				</li>
-			</ul>
-		</nav>
-		Dashboard
-	</div>
+	<main class="min-h-screen">
+		<TheSidebar />
+	</main>
 </template>
