@@ -8,6 +8,9 @@
 	import BaseButtonLink from "@/components/ui/actions/BaseButtonLink.vue";
 	import BaseButtonIcon from "@/components/ui/actions/BaseButtonIcon.vue";
 	import Avatar from "@/components/ui/elements/Avatar.vue";
+	import { useAuthStore } from "@/stores/AuthStore";
+
+	const authStore = useAuthStore();
 </script>
 
 <template>
@@ -30,7 +33,7 @@
 				</BaseButtonLink>
 			</ul>
 
-			<BaseButtonIcon label="Logga ut">
+			<BaseButtonIcon label="Logga ut" @onClick="authStore.logout">
 				<PhSignOut :size="24" />
 			</BaseButtonIcon>
 		</nav>

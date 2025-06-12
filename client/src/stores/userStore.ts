@@ -8,11 +8,15 @@ export const useUserStore = defineStore("user", () => {
 
 	const fetchUser = async () => {
 		try {
-			const { data } = await api.get<UserResponse>("/api/user");
+			const { data } = await api.get("/api/user");
 
-			user.value = data;
+			user.value = data.data as UserResponse;
 		} catch (error) {}
 	};
 
-	return { user, fetchUser };
+	const clearUser = () => {
+		user.value = null;
+	};
+
+	return { user, fetchUser, clearUser };
 });

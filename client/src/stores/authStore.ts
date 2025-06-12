@@ -39,9 +39,11 @@ export const useAuthStore = defineStore("auth", () => {
 
 	const logout = async () => {
 		try {
-			await api.post("logout");
+			await api.post("/api/logout");
 
 			isAuthenticated.value = false;
+
+			userStore.clearUser();
 
 			router.push({ name: "login" });
 		} catch (error) {
