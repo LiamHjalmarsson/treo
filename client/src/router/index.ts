@@ -1,3 +1,4 @@
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { createRouter, createWebHistory } from "vue-router";
 
@@ -19,6 +20,7 @@ const router = createRouter({
 	routes: [
 		{
 			path: "/",
+			component: DefaultLayout,
 			children: [
 				{
 					path: "",
