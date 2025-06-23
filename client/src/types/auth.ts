@@ -1,3 +1,5 @@
+import type { Theme } from "./ui";
+
 export interface Login {
 	email: string;
 	password: string;
@@ -12,15 +14,23 @@ export interface Register {
 
 export interface AuthResponse {
 	token: string;
-	user: UserResponse;
+	user: UserData;
 }
 
-export interface UserResponse {
+export interface UserData {
 	username: string;
 	email: string;
 	avatar?: string;
 	first_name?: string;
 	last_name?: string;
-	last_login_at?: string;
-	role: string;
+	last_login_at?: Date;
+	role: Role;
+}
+
+export type Role = "guest" | "member" | "admin";
+
+export interface UserSettings {
+	theme: Theme,
+	lang: string,
+	notifications: boolean
 }

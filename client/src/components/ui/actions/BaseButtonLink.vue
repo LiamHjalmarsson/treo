@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import type { Variant } from "@/types/enums";
+	import type { Variant } from "@/types/ui";
 
 	interface BaseLink {
 		label: string;

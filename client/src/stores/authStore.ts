@@ -11,7 +11,7 @@ export const useAuthStore = defineStore("auth", () => {
 	const userStore = useUserStore();
 
 	const login = async (credentials: Login) => {
-		await api.get("/sanctum/csrf-cookie");
+		await api.get("sanctum/csrf-cookie");
 
 		try {
 			await api.post("/api/login", credentials);
@@ -27,8 +27,13 @@ export const useAuthStore = defineStore("auth", () => {
 	};
 
 	const register = async (credentials: Register) => {
+		await api.get("sanctum/csrf-cookie");
+
 		try {
-			await api.post("register", credentials);
+			await api.post("api/register", credentials);
+
+			await userStore.fetchUser();
+
 			isAuthenticated.value = true;
 
 			router.push({ name: "home" });
@@ -39,7 +44,7 @@ export const useAuthStore = defineStore("auth", () => {
 
 	const logout = async () => {
 		try {
-			await api.post("/api/logout");
+			await api.post("api/logout");
 
 			isAuthenticated.value = false;
 

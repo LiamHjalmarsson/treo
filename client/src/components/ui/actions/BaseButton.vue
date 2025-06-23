@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import type { ButtonType, Variant } from "@/types/enums";
+	import type { ButtonType, Variant } from "@/types/ui";
 
 	interface Button {
 		type?: ButtonType;

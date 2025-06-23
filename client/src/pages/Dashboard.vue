@@ -1,3 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+	import Board from "@/components/board/Board.vue";
+</script>
 
-<template>Dash</template>
+<template>
+	<Board />
+</template>
